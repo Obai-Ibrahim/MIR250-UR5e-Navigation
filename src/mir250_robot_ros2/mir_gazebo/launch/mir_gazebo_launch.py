@@ -82,6 +82,11 @@ def generate_launch_description():
         default_value='true',
         description='Set to "false" to run headless.')
 
+    declare_tf_prefix_arg = DeclareLaunchArgument(
+        'tf_prefix',
+        default_value='mir',
+        description='TF prefix applied to all robot frame IDs.')
+
     launch_gazebo_world = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(gazebo_ros_dir, 'launch', 'gazebo.launch.py')),
@@ -115,6 +120,8 @@ def generate_launch_description():
             PathJoinSubstitution(
                 [FindPackageShare("mir_description"), "urdf", "mir.urdf.xacro"]
             ),
+            " tf_prefix:=",
+            LaunchConfiguration('tf_prefix'),
         ]
     )
 
@@ -164,14 +171,21 @@ def generate_launch_description():
     #     output="both",
     # )
     
-    spawn_robot = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=['-entity', LaunchConfiguration('robot_name'),
-                   '-topic', 'robot_description',
-                   '-b'],  # bond node to gazebo model,
-        namespace=LaunchConfiguration('namespace'),
-        output='screen')
+    def make_spawn_robot(context):
+        ns = context.launch_configurations.get('namespace', '')
+        args = ['-entity', context.launch_configurations['robot_name'],
+                '-topic', 'robot_description',
+                '-b']
+        if ns:
+            args += ['-robot_namespace', ns]
+        return [Node(
+            package='gazebo_ros',
+            executable='spawn_entity.py',
+            arguments=args,
+            namespace=ns,
+            output='screen')]
+
+    spawn_robot = OpaqueFunction(function=make_spawn_robot)
     
     # diff_drive_spawner = Node(
     #     package="controller_manager",
@@ -181,41 +195,19 @@ def generate_launch_description():
     #                "/controller_manager"],
     # )
 
-    joint_broad_spawner = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'joint_broadcaster'],
-        output='screen'
-    )
-    
-    diff_drive_spawner= ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
-             'diff_cont'],
-        output='screen'
-    )
-
-    delayed_diff_drive_spawner = RegisterEventHandler(
-         event_handler=OnProcessExit(
-             target_action=joint_broad_spawner,
-             on_exit=[diff_drive_spawner],
-         )
-    )
-
-    # joint_broad_spawner = Node(
-    #     package="controller_manager",
-    #     executable="spawner",
-    #     arguments=["joint_broadcaster",
-    #                "--controller-manager",
-    #                "/controller_manager"],
-    # )
-
-    
-
-    delayed_joint_broad_spawner = RegisterEventHandler(
-         event_handler=OnProcessExit(
-             target_action=spawn_robot,
-             on_exit=[joint_broad_spawner],
-         )
-    )
+    def make_controller_spawners(context):
+        ns = context.launch_configurations.get('namespace', '')
+        cm = f'/{ns}/controller_manager' if ns else '/controller_manager'
+        return [
+            ExecuteProcess(
+                cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+                     'joint_broadcaster', '-c', cm],
+                output='screen'),
+            ExecuteProcess(
+                cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+                     'diff_cont', '-c', cm],
+                output='screen'),
+        ]
 
     launch_rviz = Node(
         condition=IfCondition(LaunchConfiguration('rviz_enabled')),
@@ -232,7 +224,7 @@ def generate_launch_description():
         executable='teleop_twist_keyboard',
         namespace=LaunchConfiguration('namespace'),
         output='screen',
-        arguments=['-r', '/cmd_vel:=/diff_cont/cmd_vel_unstamped'],
+        arguments=['--ros-args', '-r', '/cmd_vel:=diff_cont/cmd_vel_unstamped'],
         prefix='xterm -e')
 
     ld.add_action(OpaqueFunction(function=process_namespace))
@@ -247,10 +239,10 @@ def generate_launch_description():
     ld.add_action(declare_rviz_arg)
     ld.add_action(declare_rviz_config_arg)
     ld.add_action(declare_gui_arg)
+    ld.add_action(declare_tf_prefix_arg)
 
-    
-    ld.add_action(joint_broad_spawner)
-    ld.add_action(diff_drive_spawner)
+
+    ld.add_action(OpaqueFunction(function=make_controller_spawners))
     ld.add_action(launch_gazebo_world)
     ld.add_action(launch_mir_description)
     ld.add_action(spawn_robot)

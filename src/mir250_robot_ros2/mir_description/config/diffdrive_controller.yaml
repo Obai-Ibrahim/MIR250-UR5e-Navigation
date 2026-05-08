@@ -13,8 +13,8 @@ diff_cont:
   ros__parameters:
 
     #type        : "diff_drive_controller/DiffDriveController"
-    left_wheel_names  : ["left_wheel_joint"] #['${prefix}left_wheel_joint'] #'$(arg prefix)left_wheel_joint'    ##------------------ CHECK SYNTAX FOR XML AND YAML
-    right_wheel_names : ["right_wheel_joint"] #['${prefix}right_wheel_joint'] #'$(arg prefix)right_wheel_joint' 
+    left_wheel_names  : ["mir/left_wheel_joint"]
+    right_wheel_names : ["mir/right_wheel_joint"]
     publish_rate: 41.2               # this is what the real MiR platform publishes (default: 50)
     # These covariances are exactly what the real MiR platform publishes
     pose_covariance_diagonal : [0.00001, 0.00001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
@@ -36,7 +36,7 @@ diff_cont:
     use_stamped_vel: false
 
     # frame_ids (same as real MiR platform)
-    base_frame_id: base_footprint #$(arg prefix)base_footprint # default: base_link
+    base_frame_id: mir/base_footprint
     odom_frame_id: odom      # default: odom
 
     # Velocity and acceleration limits

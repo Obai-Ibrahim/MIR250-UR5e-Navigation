@@ -19,8 +19,8 @@ def generate_launch_description():
             package='ira_laser_tools',
             name='mir_laser_scan_merger',
             executable='laserscan_multi_merger',
-            parameters=[{'laserscan_topics': "b_scan f_scan",
-                         'destination_frame': "virtual_laser_link",
+            parameters=[{'laserscan_topics': "/mir/b_scan /mir/f_scan",
+                         'destination_frame': "mir/virtual_laser_link",
                          'scan_destination_topic': "scan",
                          'cloud_destination_topic': "scan_cloud",
                          'min_height': -0.25,
@@ -28,6 +28,6 @@ def generate_launch_description():
                          'max_merge_time_diff': 0.005,
                          'use_sim_time': LaunchConfiguration('use_sim_time'),
                          'best_effort': False}],
-            namespace=namespace,    # adds namespace to topic names and frames
+            namespace=namespace,
             output='screen')
     ])

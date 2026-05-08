@@ -6,17 +6,18 @@
   <xacro:include filename="$(find mir_description)/urdf/include/mir_250_v1.urdf.xacro" />
 
   <xacro:arg name="tf_prefix" default="" />
+  <xacro:arg name="ns" default="" />
 
   <!-- prefix can not start with a slash like a global namespace! results in TF errors -->
-  <xacro:property name="ns" value="$(arg tf_prefix)" />
-  <xacro:if value="${ns == ''}">
+  <xacro:property name="tf_prefix_val" value="$(arg tf_prefix)" />
+  <xacro:if value="${tf_prefix_val == ''}">
     <xacro:property name="prefix" value="" />
   </xacro:if>
-  <xacro:unless value="${ns == ''}">
-    <xacro:property name="prefix" value="${ns}/" />
+  <xacro:unless value="${tf_prefix_val == ''}">
+    <xacro:property name="prefix" value="${tf_prefix_val}/" />
   </xacro:unless>
 
-  <xacro:mir_250 prefix="${prefix}" ns="${ns}"/>
+  <xacro:mir_250 prefix="${prefix}" ns="$(arg ns)"/>
 
   <!-- <xacro:diff_controller_plugin_gazebo prefix="${prefix}" ns="${ns}"
     left_wheel_joint="${prefix}left_wheel_joint"
@@ -32,7 +33,7 @@
     <hardware>
       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
     </hardware>
-    <joint name="left_wheel_joint">
+    <joint name="${prefix}left_wheel_joint">
       <command_interface name="velocity">
         <param name="min">-1</param>
         <param name="max">1</param>
@@ -40,7 +41,7 @@
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="right_wheel_joint">
+    <joint name="${prefix}right_wheel_joint">
       <command_interface name="velocity">
         <param name="min">-1</param>
         <param name="max">1</param>
@@ -48,35 +49,35 @@
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="fl_caster_rotation_joint">
+    <joint name="${prefix}fl_caster_rotation_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="fr_caster_rotation_joint">
+    <joint name="${prefix}fr_caster_rotation_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="bl_caster_rotation_joint">
+    <joint name="${prefix}bl_caster_rotation_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="br_caster_rotation_joint">
+    <joint name="${prefix}br_caster_rotation_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="fl_caster_wheel_joint">
+    <joint name="${prefix}fl_caster_wheel_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="fr_caster_wheel_joint">
+    <joint name="${prefix}fr_caster_wheel_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="bl_caster_wheel_joint">
+    <joint name="${prefix}bl_caster_wheel_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
-    <joint name="br_caster_wheel_joint">
+    <joint name="${prefix}br_caster_wheel_joint">
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
