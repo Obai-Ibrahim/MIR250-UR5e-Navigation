@@ -1,0 +1,20 @@
+# ROS 2 Build Artifacts
+install/
+build/
+log/
+
+# IDE Settings (VS Code)
+.vscode/
+
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local environment and setup files
+.env
+.DS_Store (for Mac users)
+
+# Colcon specific
+.colcon/
