@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>merged</name>
+  <version>0.0.1</version>
+  <description>Combined MiR 250 + UR arm launch, URDF, config, and visualization package.</description>
+
+  <maintainer email="obai33ibrahim@gmail.com">Obai Ibrahim</maintainer>
+  <author email="obai33ibrahim@gmail.com">Obai Ibrahim</author>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+
+  <depend>gazebo</depend>
+  <depend>gazebo_ros</depend>
+  <depend>rviz2</depend>
+  <depend>ira_laser_tools</depend>
+  <depend>teleop_twist_keyboard</depend>
+  <depend>xterm</depend>
+  <depend>xacro</depend>
+  <depend>mir_description</depend>
+  <depend>gazebo_ros_pkgs</depend>
+  <depend>robot_localization</depend>
+  <depend>ur_description</depend>
+  <depend>ur_moveit_config</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

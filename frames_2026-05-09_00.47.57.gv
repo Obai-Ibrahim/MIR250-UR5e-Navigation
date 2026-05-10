@@ -1,0 +1,25 @@
+digraph G {
+"base_link" -> "bl_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_footprint" -> "base_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"bl_caster_rotation_link" -> "bl_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_link" -> "br_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"br_caster_rotation_link" -> "br_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_link" -> "fl_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"fl_caster_rotation_link" -> "fl_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_link" -> "fr_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"fr_caster_rotation_link" -> "fr_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_link" -> "left_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_link" -> "right_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.202\nBuffer length: 4.95\nMost recent transform: 42.261\nOldest transform: 37.311\n"];
+"base_link" -> "surface"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "back_laser_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "front_laser_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "imu_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "virtual_laser_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"imu_link" -> "imu_frame"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "us_1_frame"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "us_2_frame"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1778280477.8550534"[ shape=plaintext ] ;
+}->"base_footprint";
+}

@@ -81,33 +81,7 @@ def launch_setup(context, *args, **kwargs):
             " ",
             PathJoinSubstitution(
                 [FindPackageShare(description_package), "urdf", description_file]
-            ),
-            " ",
-            "safety_limits:=",
-            safety_limits,
-            " ",
-            "safety_pos_margin:=",
-            safety_pos_margin,
-            " ",
-            "safety_k_position:=",
-            safety_k_position,
-            " ",
-            "name:=",
-            "ur",
-            " ",
-            "ur_type:=",
-            ur_type,
-            " ",
-            "prefix:=",
-            prefix,
-            " ",
-            "sim_gazebo:=true",
-            " ",
-            "simulation_controllers:=",
-            initial_joint_controllers,
-            " ",
-            "initial_positions_file:=",
-            initial_positions_file_abs,
+            )
         ]
     )
     robot_description = {"robot_description": robot_description_content}
@@ -167,7 +141,7 @@ def launch_setup(context, *args, **kwargs):
         }.items(),
     )
 
-    # Spawn robot
+    # Spawn robPrefixot
     gazebo_spawn_robot = Node(
         package="gazebo_ros",
         executable="spawn_entity.py",
@@ -179,9 +153,9 @@ def launch_setup(context, *args, **kwargs):
     nodes_to_start = [
         robot_state_publisher_node,
         joint_state_broadcaster_spawner,
-        delay_rviz_after_joint_state_broadcaster_spawner,
-        initial_joint_controller_spawner_stopped,
-        initial_joint_controller_spawner_started,
+        #delay_rviz_after_joint_state_broadcaster_spawner,
+        #initial_joint_controller_spawner_stopped,
+        #initial_joint_controller_spawner_started,
         gazebo,
         gazebo_spawn_robot,
     ]

@@ -1,0 +1,181 @@
+# Combined controller configuration for MiR 250 + UR arm.
+#
+# Joint name assumptions (matches xacro defaults):
+#   MiR prefix  : "mir/"  (tf_prefix="mir")
+#   UR  prefix  : "ur_"   (ur_tf_prefix="ur_")
+#
+# If you change either prefix in the xacro args you must update the
+# joint names and frame IDs in this file accordingly, since ROS2
+# controller YAML files do not support substitution arguments.
+
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+    use_sim_time: true
+
+    # --- MiR 250 controllers ---
+    diff_cont:
+      type: diff_drive_controller/DiffDriveController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # --- UR arm controllers ---
+    io_and_status_controller:
+      type: ur_controllers/GPIOController
+
+    speed_scaling_state_broadcaster:
+      type: ur_controllers/SpeedScalingStateBroadcaster
+
+    force_torque_sensor_broadcaster:
+      type: ur_controllers/ForceTorqueStateBroadcaster
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    scaled_joint_trajectory_controller:
+      type: ur_controllers/ScaledJointTrajectoryController
+
+    forward_velocity_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+    forward_position_controller:
+      type: position_controllers/JointGroupPositionController
+
+
+# =================================================================
+#  MiR 250 — diff drive controller
+# =================================================================
+diff_cont:
+  ros__parameters:
+    left_wheel_names:  ["mir/left_wheel_joint"]
+    right_wheel_names: ["mir/right_wheel_joint"]
+
+    publish_rate: 41.2  # matches real MiR platform output rate
+    pose_covariance_diagonal:  [0.00001, 0.00001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+    twist_covariance_diagonal: [0.1,     0.1,     1000000.0, 1000000.0, 1000000.0, 1000.0]
+    enable_odom_tf: true
+
+    wheel_separation: 0.445208
+    wheel_radius:     0.100
+    wheel_separation_multiplier: 1.0
+    wheel_radius_multiplier:     1.0
+
+    cmd_vel_timeout: 0.5
+    use_stamped_vel: false
+
+    base_frame_id: mir/base_footprint
+    odom_frame_id: odom
+
+    linear:
+      x:
+        has_velocity_limits:    true
+        max_velocity:           1.0   # m/s
+        has_acceleration_limits: true
+        max_acceleration:       2.0   # m/s²
+    angular:
+      z:
+        has_velocity_limits:    true
+        max_velocity:           1.5   # rad/s
+        has_acceleration_limits: true
+        max_acceleration:       2.5   # rad/s²
+
+
+# =================================================================
+#  UR arm — broadcaster params
+# =================================================================
+speed_scaling_state_broadcaster:
+  ros__parameters:
+    state_publish_rate: 100.0
+
+force_torque_sensor_broadcaster:
+  ros__parameters:
+    sensor_name: ur_tcp_fts_sensor
+    state_interface_names:
+      - force.x
+      - force.y
+      - force.z
+      - torque.x
+      - torque.y
+      - torque.z
+    frame_id: ur_tool0
+    topic_name: ft_data
+
+
+# =================================================================
+#  UR arm — trajectory / velocity / position controllers
+# =================================================================
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      ur_shoulder_pan_joint:  {trajectory: 0.2, goal: 0.1}
+      ur_shoulder_lift_joint: {trajectory: 0.2, goal: 0.1}
+      ur_elbow_joint:         {trajectory: 0.2, goal: 0.1}
+      ur_wrist_1_joint:       {trajectory: 0.2, goal: 0.1}
+      ur_wrist_2_joint:       {trajectory: 0.2, goal: 0.1}
+      ur_wrist_3_joint:       {trajectory: 0.2, goal: 0.1}
+
+scaled_joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    constraints:
+      stopped_velocity_tolerance: 0.2
+      goal_time: 0.0
+      ur_shoulder_pan_joint:  {trajectory: 0.2, goal: 0.1}
+      ur_shoulder_lift_joint: {trajectory: 0.2, goal: 0.1}
+      ur_elbow_joint:         {trajectory: 0.2, goal: 0.1}
+      ur_wrist_1_joint:       {trajectory: 0.2, goal: 0.1}
+      ur_wrist_2_joint:       {trajectory: 0.2, goal: 0.1}
+      ur_wrist_3_joint:       {trajectory: 0.2, goal: 0.1}
+
+forward_velocity_controller:
+  ros__parameters:
+    joints:
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
+    interface_name: velocity
+
+forward_position_controller:
+  ros__parameters:
+    joints:
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint

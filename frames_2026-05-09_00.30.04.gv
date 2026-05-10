@@ -1,0 +1,26 @@
+digraph G {
+"odom" -> "mir/base_footprint"[label=" Broadcaster: default_authority\nAverage rate: 41.379\nBuffer length: 4.93\nMost recent transform: 130.901\nOldest transform: 125.971\n"];
+"mir/base_footprint" -> "mir/base_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/surface"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/back_laser_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/front_laser_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/imu_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/virtual_laser_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/imu_link" -> "mir/imu_frame"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/us_1_frame"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/us_2_frame"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"mir/base_link" -> "mir/bl_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/bl_caster_rotation_link" -> "mir/bl_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/base_link" -> "mir/br_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/br_caster_rotation_link" -> "mir/br_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/base_link" -> "mir/fl_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/fl_caster_rotation_link" -> "mir/fl_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/base_link" -> "mir/fr_caster_rotation_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/fr_caster_rotation_link" -> "mir/fr_caster_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/base_link" -> "mir/left_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+"mir/base_link" -> "mir/right_wheel_link"[label=" Broadcaster: default_authority\nAverage rate: 20.204\nBuffer length: 4.9\nMost recent transform: 130.911\nOldest transform: 126.011\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1778279404.2154746"[ shape=plaintext ] ;
+}->"odom";
+}

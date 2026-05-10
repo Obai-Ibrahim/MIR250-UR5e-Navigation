@@ -5,7 +5,7 @@
   <!-- MiR250 base -->
   <xacro:include filename="$(find mir_description)/urdf/include/mir_250_v1.urdf.xacro" />
 
-  <xacro:arg name="tf_prefix" default="" />
+  <xacro:arg name="tf_prefix" default="mir" />
   <xacro:arg name="ns" default="" />
 
   <!-- prefix can not start with a slash like a global namespace! results in TF errors -->
@@ -17,7 +17,9 @@
     <xacro:property name="prefix" value="${tf_prefix_val}/" />
   </xacro:unless>
 
+
   <xacro:mir_250 prefix="${prefix}" ns="$(arg ns)"/>
+
 
   <!-- <xacro:diff_controller_plugin_gazebo prefix="${prefix}" ns="${ns}"
     left_wheel_joint="${prefix}left_wheel_joint"

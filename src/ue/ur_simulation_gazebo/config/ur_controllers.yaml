@@ -35,7 +35,7 @@ speed_scaling_state_broadcaster:
 
 force_torque_sensor_broadcaster:
   ros__parameters:
-    sensor_name: tcp_fts_sensor
+    sensor_name: ur_tcp_fts_sensor
     state_interface_names:
       - force.x
       - force.y
@@ -43,19 +43,19 @@ force_torque_sensor_broadcaster:
       - torque.x
       - torque.y
       - torque.z
-    frame_id: tool0
+    frame_id: ur_tool0
     topic_name: ft_data
 
 
 joint_trajectory_controller:
   ros__parameters:
     joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -67,23 +67,23 @@ joint_trajectory_controller:
     constraints:
       stopped_velocity_tolerance: 0.2
       goal_time: 0.0
-      shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-      shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-      elbow_joint: { trajectory: 0.2, goal: 0.1 }
-      wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-      wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-      wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
 
 
 scaled_joint_trajectory_controller:
   ros__parameters:
     joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -95,30 +95,30 @@ scaled_joint_trajectory_controller:
     constraints:
       stopped_velocity_tolerance: 0.2
       goal_time: 0.0
-      shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-      shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-      elbow_joint: { trajectory: 0.2, goal: 0.1 }
-      wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-      wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-      wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      ur_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
 
 forward_velocity_controller:
   ros__parameters:
     joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
     interface_name: velocity
 
 forward_position_controller:
   ros__parameters:
     joints:
-      - shoulder_pan_joint
-      - shoulder_lift_joint
-      - elbow_joint
-      - wrist_1_joint
-      - wrist_2_joint
-      - wrist_3_joint
+      - ur_shoulder_pan_joint
+      - ur_shoulder_lift_joint
+      - ur_elbow_joint
+      - ur_wrist_1_joint
+      - ur_wrist_2_joint
+      - ur_wrist_3_joint
