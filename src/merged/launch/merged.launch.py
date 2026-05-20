@@ -131,7 +131,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='both',
-        parameters=[robot_description2],
+        parameters=[robot_description2,{"use_sim_time": True}],
         # remappings=[
         #     ("/diff_cont/cmd_vel_unstamped", "/cmd_vel"),],
         namespace=LaunchConfiguration('namespace'),
