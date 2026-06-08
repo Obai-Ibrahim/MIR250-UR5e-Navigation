@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find mir_description)/urdf/include/common_properties.urdf.xacro" />
+
+  <xacro:property name="prox_x"    value="0.020" />
+  <xacro:property name="prox_y"    value="0.040" />
+  <xacro:property name="prox_z"    value="0.020" />
+  <xacro:property name="prox_mass" value="0.010" />
+
+  <!-- half-cone angle: 8 deg (~0.14 rad) — representative for short-range ultrasonic/IR -->
+  <xacro:property name="prox_fov" value="0.1396" />
+
+  <!-- ============================================================
+       proximity_sensor macro
+       params:
+         prefix  — tf prefix (e.g. "" or "robot/")
+         name    — sensor name without prefix (e.g. "prox_front_right")
+                   → joint  : ${prefix}${name}_joint
+                   → link   : ${prefix}${name}_link
+                   → sensor : ${prefix}${name}_sensor
+                   → plugin : ${prefix}${name}_plugin
+         topic   — ROS topic suffix (e.g. "prox_front_right")
+                   → full topic: ${prefix}${topic}
+         parent  — full parent link name (e.g. "${prefix}base_link")
+         *origin — <origin xyz="..." rpy="..."/> block
+       ============================================================ -->
+  <xacro:macro name="proximity_sensor" params="prefix name topic parent *origin">
+
+    <joint name="${prefix}${name}_joint" type="fixed">
+      <parent link="${parent}" />
+      <child  link="${prefix}${name}_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+
+    <link name="${prefix}${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${prox_x} ${prox_y} ${prox_z}" />
+        </geometry>
+        <xacro:insert_block name="material_black" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${prox_x} ${prox_y} ${prox_z}" />
+        </geometry>
+      </collision>
+      <xacro:box_inertial x="${prox_x}" y="${prox_y}" z="${prox_z}" mass="${prox_mass}">
+        <origin xyz="0 0 0" />
+      </xacro:box_inertial>
+    </link>
+
+    <gazebo reference="${prefix}${name}_link">
+      <material>Gazebo/FlatBlack</material>
+      <sensor type="ray" name="${name}_sensor">
+        <visualize>false</visualize>
+        <update_rate>10.0</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>${-prox_fov}</min_angle>
+              <max_angle>${prox_fov}</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0</min_angle>
+              <max_angle>0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.020</min>
+            <max>2.500</max>
+            <resolution>0.001</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </ray>
+        <plugin name="gazebo_ros_${name}_plugin" filename="libgazebo_ros_ray_sensor.so">
+          <ros>
+            <remapping>~/out:=${prefix}${topic}</remapping>
+          </ros>
+          <output_type>sensor_msgs/Range</output_type>
+          <frame_name>${prefix}${name}_link</frame_name>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

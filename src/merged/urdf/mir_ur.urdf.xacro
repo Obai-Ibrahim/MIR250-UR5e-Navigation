@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="mir_ur">
 
   <!-- mir_250_v1.urdf.xacro already transitively includes ur_macro.xacro -->
-  <xacro:include filename="$(find mir_description)/urdf/include/mir_250_v2.urdf.xacro" />
+  <xacro:include filename="$(find mir_description)/urdf/include/mir_250_v3.urdf.xacro" />
 
   <!-- ================================================================
        MiR 250 arguments
